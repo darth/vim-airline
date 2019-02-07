@@ -101,6 +101,6 @@ function! airline#extensions#languageclient#init(ext)
   call airline#parts#define_function('languageclient_warning_count', 'airline#extensions#languageclient#get_warning')
   augroup airline_languageclient
     autocmd!
-    autocmd User LanguageClientDiagnosticsChanged call <sid>get_diagnostics()
+    autocmd User LanguageClientDiagnosticsChanged,LanguageClientStopped call <sid>get_diagnostics()
   augroup END
 endfunction
