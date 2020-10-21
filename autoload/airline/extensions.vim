@@ -23,6 +23,7 @@ endfunction
 let s:script_path = tolower(resolve(expand('<sfile>:p:h')))
 
 let s:filetype_overrides = {
+      \ 'coc-explorer':  [ 'CoC Explorer', '' ],
       \ 'defx':  ['defx', '%{b:defx.paths[0]}'],
       \ 'fugitive': ['fugitive', '%{airline#util#wrap(airline#extensions#branch#get_head(),80)}'],
       \ 'gundo': [ 'Gundo', '' ],
@@ -448,6 +449,11 @@ function! airline#extensions#load()
   if get(g:, 'airline#extensions#searchcount#enabled', 1) && exists('*searchcount')
     call airline#extensions#searchcount#init(s:ext)
     call add(s:loaded_ext, 'searchcount')
+  endif
+
+  if get(g:, 'loaded_battery', 0) && get(g:, 'airline#extensions#battery#enabled', 0)
+    call airline#extensions#battery#init(s:ext)
+    call add(s:loaded_ext, 'battery')
   endif
 
   if !get(g:, 'airline#extensions#disable_rtp_load', 0)
