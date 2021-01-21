@@ -1,4 +1,4 @@
-" Apache 2.0 license. Copyright (c) 2019-2020 Copyright Neovim contributors.
+" Apache 2.0 license. Copyright (c) 2019-2021 Copyright Neovim contributors.
 " Plugin: https://github.com/neovim/nvim-lsp
 " vim: et ts=2 sts=2 sw=2
 
@@ -25,7 +25,11 @@ function! airline#extensions#nvimlsp#get(type) abort
 
   let symbol = is_err ? error_symbol : warning_symbol
 
-  let num = v:lua.vim.lsp.util.buf_diagnostics_count(a:type)
+  if luaeval("pcall(require, 'vim.lsp.diagnostic')")
+    let num = v:lua.vim.lsp.diagnostic.get_count(0, a:type)
+  else
+    let num = v:lua.vim.lsp.util.buf_diagnostics_count(a:type)
+  endif
 
   return s:airline_nvimlsp_count(num, symbol)
 endfunction
